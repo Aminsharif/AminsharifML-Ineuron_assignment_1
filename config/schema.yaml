@@ -1,0 +1,53 @@
+columns:
+  - crim: Integer
+  - zn: Integer
+  - indus: Integer
+  - chas: Integer
+  - nox: Integer
+  - rm: Integer
+  - age: Integer
+  - dis: Integer
+  - rad: Integer
+  - tax: Integer
+  - ptratio: Integer
+  - b: Integer
+  - lstat: Integer
+  - medv: Integer
+
+numerical_columns:
+  - crim
+  - zn
+  - indus
+  - chas
+  - nox
+  - rm
+  - age
+  - dis
+  - rad
+  - tax
+  - ptratio
+  - b
+  - lstat
+
+categorical_columns: []
+
+drop_columns: []
+  
+num_features:
+  - crim
+  - zn
+  - indus
+  - chas
+  - nox
+  - rm
+  - age
+  - dis
+  - rad
+  - tax
+  - ptratio
+  - b
+  - lstat
+
+or_columns: []
+
+oh_columns: []
