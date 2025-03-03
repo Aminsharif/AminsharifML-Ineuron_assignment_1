@@ -7,7 +7,7 @@ from ml_boston.logger import logging
 import sys
 import pandas as pd
 from typing import Optional
-from ml_boston.entity.s3_estimator import FraudDetectionLocalModelEstimator
+from ml_boston.entity.s3_estimator import BostonLocalModelEstimator
 from dataclasses import dataclass
 import joblib
 import numpy as np
@@ -35,7 +35,7 @@ class LocalModelEvaluation:
         except Exception as e:
             raise ExceptionHandle(e, sys) from e
 
-    def get_best_model(self) -> Optional[FraudDetectionLocalModelEstimator]:
+    def get_best_model(self) -> Optional[BostonLocalModelEstimator]:
         """
         Method Name :   get_best_model
         Description :   This function is used to get model in production
@@ -45,10 +45,10 @@ class LocalModelEvaluation:
         """
         try:
             model_path=self.model_eval_config.local_model_path
-            FraudDetection_estimator = FraudDetectionLocalModelEstimator(model_path=model_path)
+            Boston_estimator = BostonLocalModelEstimator(model_path=model_path)
 
-            if FraudDetection_estimator.is_model_present(model_path=model_path):
-                return FraudDetection_estimator
+            if Boston_estimator.is_model_present(model_path=model_path):
+                return Boston_estimator
 
             return None
         except Exception as e:

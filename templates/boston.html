@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Boston House Prediction</title>
+    <link rel="shortcut icon"
+        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAACsUlEQVR42gBBAL7/AU/F2wAN8/wAFe/0AP0A/wAC/fst/f7/VAMDAzj/AAAmAAAAAwEAANv+/v/NAQAArfwIBskE/f0A7w8JAPkJBQACiIUBChgZGZgZ/v2vZWBkKmFiZuD+z4AAQLYsIxOjE5BRwPT33wzG//+r/jMyfAHJAQQQyz9mJoZ/jIzMDH//LmJk+B+FrBEDMDKwMv/5mwu0TPM/A2PQPybGzwABxCT8+jMDz/fvtf/+/4tiIAIAbQY6lMGF59vPbsHPPxkAAohF8NVHbQZ21op/TExACxgYgozlGfZff87w7utPMB8EzJREGcyVRRm+//rL8PT9V4a3X34ynL3/Nv3rsxcrAQKI6ScTQ/h/RkZ2mGJzoGJHTUkUW4NNFBiWHLvLMPvgTQYhbnYGTjYWBpCFP///jwYIICY2dlZQaDP8//+fwVNXGm4INPAYYGFS4a3H4KAhybD0+F2wK/79/cMgICJmChBATP//M6rCbFIV52M4ee81mA1SDAMwMS89GYbOMFOwK0AAGLWiAAHEBIpnmGYQeAf0Hwg4akgwwALh0uN3DJ1bL4FpmEGweAEIICYmRoa7MBsvPn4PdvIToBNB/lSDGhpjqQwOVJDzD9x4DncZMBjeAQQQ0++//087AjWDXPAMqBGkAOaKaAtluHNT7NXBWAWobgnQICag7m+fP58HCCDG3EVHTZiZmE4A4xeUZBn+MxAHGEH++/3DByCAmP6zMZ75w8I4nYEEzaAYY2BlXKsuI7odIICY/rEyMvxiY64AumkP0SYwMZ7/y8qcyczM+A8ggJgY/oN1fQUaEPKXhWkmPkeDbWdiWg1U6wXkvQZpBQggFqQc9/EfM3MG858/q/79/x/JxMRsChQWA+VTYCZ7+/ffn/PAgFsBzEBbmUA6oa4FCDAA2gfxlsc6tMUAAAAASUVORK5CYII=" />
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light static-top">
+        <div class="container-fluid">
+           <!-- <a class="navbar-brand" href="https://ineuron.ai"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIkAAAAlCAMAAABBJDpuAAAAVFBMVEX/fgD/iQA7NzIyMjMnNYInNYEnNYInNYEzMzInNYQnNYETJzsnNYIwN1wxMjNoTis4O1YrNm0xOF47PE9DP0dEQEVpTVkAJJ4nNYEOLJHJbiAzMzOmmmHRAAAAFnRSTlOh/vu+986oen9fP2UqEzQkFAIDAAEEILVBJQAAA3FJREFUWMPNmO2WoyAMQG0VBARtdVRs3/89NwkgaF1rd2aOm18tIrnkgwSz7n+R7LcV1ELkeS7E7VySRlyfQXJhTiO55c+liP4cEuH1X8E7gaV+S3Jv2zYZ/Vr+/Sdx2vP6doc/fSPcf/GOpLSFVXFUW8t+giRP47TOd60yk1hbxIhSP0ACKPWrvw7YBIT/lcQY84G3Wk17ugWQfg5UsQJpjflKSLQi7xTWyk0SXTJ4VnB5D1yccxmp4Z+mX5KGNS+SPXVNll0ulyxL0wYmloBB6zL/MpCoAgjAJiUM6w0SboMwPUdRogvNKcNM3smFdRvEcJJkKcflQa+X0pNIfBGW0zKqjyQtw4VLKQlI7ZLgdrRNSZDjMQx2GB4pCkxkCrfGWUTJ0Egan6muCHgJCUwtnCk0mrJ9Q8K5LUqtdSfynkAedhynaRqngVDaXLiJEAzkFkM71IuIlWRYtSQpbXSZDvQ7JPCei9brs+oaABkn74LRIkpFaVxGnzjvIxTYREOoEwn5r01JTDRTcO87Eu3zNUeTPKZpjrIRrNIDCjzALbPk7LJMIokOEQu2K7yKQAKvFDF9pVe0R+LGb7h1MMkw2ijjA/1zhSfSphvEAChXJEhAqwYStIJWXnTpvbdH4hTUwSQ2JRmQpILDLYbB7J41SYiLcNozu5Z3JMo7RxBJahI7WSRByCMkqJt9hySESbVJcvmARJGFExJmdBSl2oM2+T4JLWfgaGFptizlPUm1FydHSdyZ7UnS4ySph2kS0kJrkvr5NJg7dnrJnfxgxPozRPGtkyPNOxtaiDvbIAF9L+5B5zTI2BwlwXmM+U3zReav3o0F8oUEFFZ42McDZYomOUziFmezgWyo251Uc1nyKJol7URCEvIYUEbHYaEGQi9C9egwCdVfHwiaajfjKMUcHcRacCylhWJbJDfq47EEDhYqoIWjHnwDXZPpPiChPQelLU+Cbm4w50FmYgkvFwpiWwCC/Um/SLcNElOC9RVj6qWpCiEMvRUK4zLpdKmPw8rVldy/qxjn60wLrVLWJIPLiZJRr3fsvnOHPvare+lB93tb37T20D82jqOt+zNuXhuNvNhp7X+PpHb3rvV9R5xjE2SpyCN9ffQO+GtWIZr5Xnytz4gTMIRYfys47/uJEXny/aQ/95tSUwmU+uRvSp/IHzQqZYpYrQmxAAAAAElFTkSuQmCC" /></a> -->
+        </div>
+     </nav>
+    <section>
+        <!-- <div class="container-fluid">
+            <div class="container">
+                <form action="/" method="post">
+                    <legend>Bostom House Prediction Form</legend>
+
+        
+                      <div class="mb-3">
+                        <label for="crim">crim</label>
+                        <input type="number" class="form-control" id="crim" name="crim" min="0" max="5" placeholder="select between 0.01 to 4" step="0.01"  required="required">
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="zn">zn</label>
+                        <input type="number" class="form-control" id="zn" name="zn" min="0" max="12" placeholder="select between 0 to 12" step="0.01"  required="required">
+                      </div>
+
+
+                      <div class="mb-3">
+                        <label for="indus">indus</label>
+                        <input type="number" class="form-control" id="indus" name="indus" min="0.5" max="18" placeholder="select between 0.5 to 18" step="0.01"  required="required">
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="chas">chas</label>
+                        <input type="number" class="form-control" id="chas" name="chas" min="0" max="1" placeholder="select between  0 or 1"  required="required">
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="nox">nox</label>
+                        <input type="number" class="form-control" id="nox" name="nox" min="0.3" max="0.7" placeholder="select between 0.3 to 0.7" step="0.01"  required="required">
+                      </div>
+
+
+                      <div class="mb-3">
+                        <label for="rm">rm</label>
+                        <input type="number" class="form-control" id="rm" name="rm" min="3" max="7" placeholder="select between 3 to 7" step="0.01"  required="required">
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="age">age</label>
+                        <input type="number" class="form-control" id="age" name="age" min="2" max="100" placeholder="select between 2 to 100" step="0.01"  required="required">
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="dis">dis</label>
+                        <input type="number" class="form-control" id="dis" name="dis" min="2" max="7" placeholder="select between 2 to 7" step="0.01"  required="required">
+                      </div>
+
+
+                      <div class="mb-3">
+                        <label for="rad">rad</label>
+                        <input type="number" class="form-control" id="rad" name="rad" min="1" max="15" placeholder="select between 1 to 15" step="0.01"  required="required">
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="tax">tax</label>
+                        <input type="number" class="form-control" id="tax" name="tax" min="180" max="700" placeholder="select between 180 to 700" step="0.01"  required="required">
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="ptratio">ptratio</label>
+                        <input type="number" class="form-control" id="ptratio" name="ptratio" min="12" max="22" placeholder="select between 12 to 22" step="0.01"  required="required">
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="b">b</label>
+                        <input type="number" class="form-control" id="b" name="b" min="300" max="400" placeholder="select between  300 to 400" step="0.01"  required="required">
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label for="lstat">lstat</label>
+                        <input type="number" class="form-control" id="lstat" name="lstat" min="5" max="15" placeholder="select between 5 to 15" step="0.01"  required="required">
+                      </div>
+
+        
+                        <input class="btn btn-primary" type="submit" value="Predict Boston House" required />
+                    </div>
+                    
+                </form>
+            </div> -->
+           
+            <div class="container-fluid">
+              <div class="container">
+                  <form action="/" method="post">
+                      <legend>Boston House Prediction Form</legend>
+          
+                      <!-- First Row -->
+                      <div class="row">
+                          <!-- Column 1 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="crim">crim</label>
+                                  <input type="number" class="form-control" id="crim" name="crim" min="0" max="5" placeholder="select between 0.01 to 4" step="0.01" required="required">
+                              </div>
+                          </div>
+          
+                          <!-- Column 2 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="zn">zn</label>
+                                  <input type="number" class="form-control" id="zn" name="zn" min="0" max="12" placeholder="select between 0 to 12" step="0.01" required="required">
+                              </div>
+                          </div>
+          
+                          <!-- Column 3 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="indus">indus</label>
+                                  <input type="number" class="form-control" id="indus" name="indus" min="0.5" max="18" placeholder="select between 0.5 to 18" step="0.01" required="required">
+                              </div>
+                          </div>
+          
+                          <!-- Column 4 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="chas">chas</label>
+                                  <input type="number" class="form-control" id="chas" name="chas" min="0" max="1" placeholder="select between 0 or 1" required="required">
+                              </div>
+                          </div>
+                      </div>
+          
+                      <!-- Second Row -->
+                      <div class="row">
+                          <!-- Column 1 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="nox">nox</label>
+                                  <input type="number" class="form-control" id="nox" name="nox" min="0.3" max="0.7" placeholder="select between 0.3 to 0.7" step="0.01" required="required">
+                              </div>
+                          </div>
+          
+                          <!-- Column 2 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="rm">rm</label>
+                                  <input type="number" class="form-control" id="rm" name="rm" min="3" max="7" placeholder="select between 3 to 7" step="0.01" required="required">
+                              </div>
+                          </div>
+          
+                          <!-- Column 3 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="age">age</label>
+                                  <input type="number" class="form-control" id="age" name="age" min="2" max="100" placeholder="select between 2 to 100" step="0.01" required="required">
+                              </div>
+                          </div>
+          
+                          <!-- Column 4 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="dis">dis</label>
+                                  <input type="number" class="form-control" id="dis" name="dis" min="2" max="7" placeholder="select between 2 to 7" step="0.01" required="required">
+                              </div>
+                          </div>
+                      </div>
+          
+                      <!-- Third Row -->
+                      <div class="row">
+                          <!-- Column 1 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="rad">rad</label>
+                                  <input type="number" class="form-control" id="rad" name="rad" min="1" max="15" placeholder="select between 1 to 15" step="0.01" required="required">
+                              </div>
+                          </div>
+          
+                          <!-- Column 2 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="tax">tax</label>
+                                  <input type="number" class="form-control" id="tax" name="tax" min="180" max="700" placeholder="select between 180 to 700" step="0.01" required="required">
+                              </div>
+                          </div>
+          
+                          <!-- Column 3 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="ptratio">ptratio</label>
+                                  <input type="number" class="form-control" id="ptratio" name="ptratio" min="12" max="22" placeholder="select between 12 to 22" step="0.01" required="required">
+                              </div>
+                          </div>
+          
+                          <!-- Column 4 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="b">b</label>
+                                  <input type="number" class="form-control" id="b" name="b" min="300" max="400" placeholder="select between 300 to 400" step="0.01" required="required">
+                              </div>
+                          </div>
+                      </div>
+          
+                      <!-- Fourth Row -->
+                      <div class="row">
+                          <!-- Column 1 -->
+                          <div class="col-md-3">
+                              <div class="mb-3">
+                                  <label for="lstat">lstat</label>
+                                  <input type="number" class="form-control" id="lstat" name="lstat" min="5" max="15" placeholder="select between 5 to 15" step="0.01" required="required">
+                              </div>
+                          </div>
+                      </div>
+          
+                      <!-- Submit Button -->
+                      <div class="row">
+                          <div class="col-md-12">
+                              <input class="btn btn-primary" type="submit" value="Predict Boston House" required />
+                          </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+            <div class="text-center text-black">
+                <h2 class="display-4 fw-bolder">Boston House Prediction: {{context}} </h2>
+            </div>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        $(".input").focus(function(){
+            $(this).parent().addClass("focus");
+        }).blur(function(){
+            if($(this).val() === ''){
+                $(this).parent().removeClass("focus");
+            }
+        })
+    </script>
+  </body>
+</html>

@@ -7,7 +7,7 @@ import joblib
 from ml_boston.utils.main_utils import save_object
 import os
 
-class FraudDetectionLocalModelEstimator:
+class BostonLocalModelEstimator:
     """
     This class is used to save and retrieve ml_bostons model in s3 bucket and to do prediction
     """

@@ -4,7 +4,7 @@ from ml_boston.exception import ExceptionHandle
 from ml_boston.logger import logging
 from ml_boston.entity.artifact_entity import LocalModelPusherArtifact,LocalModelEvaluationArtifact
 from ml_boston.entity.config_entity import LocalModelPusherConfig
-from ml_boston.entity.s3_estimator import FraudDetectionLocalModelEstimator
+from ml_boston.entity.s3_estimator import BostonLocalModelEstimator
 from ml_boston.constants import *
 import joblib
 
@@ -18,7 +18,7 @@ class LocalModelPusher:
         """
         self.model_evaluation_artifact = model_evaluation_artifact
         self.model_pusher_config = model_pusher_config
-        self.FraudDetection_estimator = FraudDetectionLocalModelEstimator(model_path=model_pusher_config.model_key_path)
+        self.Boston_estimator = BostonLocalModelEstimator(model_path=model_pusher_config.model_key_path)
 
     def initiate_model_pusher(self) -> LocalModelPusherArtifact:
         """
@@ -33,7 +33,7 @@ class LocalModelPusher:
         try:
             logging.info("Uploading artifacts folder to s3 bucket")
             model = joblib.load(self.model_evaluation_artifact.trained_model_path)
-            self.FraudDetection_estimator.save_model(model)
+            self.Boston_estimator.save_model(model)
 
             model_pusher_artifact = LocalModelPusherArtifact(model_path=self.model_pusher_config.model_key_path)
 

@@ -69,7 +69,7 @@ REGION_NAME = "us-east-1"
 MODEL EVALUATION related constant 
 """
 MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
-MODEL_BUCKET_NAME = "fraud-detection-model2024"
+MODEL_BUCKET_NAME = "Boston-detection-model2024"
 MODEL_PUSHER_S3_KEY = "model-registry"
 
 

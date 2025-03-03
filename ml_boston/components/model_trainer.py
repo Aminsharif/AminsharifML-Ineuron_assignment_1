@@ -1,6 +1,5 @@
 import sys
 from typing import Tuple
-
 import numpy as np
 from sklearn.metrics import mean_squared_error, r2_score
 from neuro_mf  import ModelFactory
@@ -76,7 +75,7 @@ class ModelTrainer:
 
             ml_boston_model = FraudDetectionModel(preprocessing_object=preprocessing_obj,
                                        trained_model_object=best_model_detail.best_model)
-            logging.info("Created fraud detectionmodel object with preprocessor and model")
+            logging.info("Created Boston detectionmodel object with preprocessor and model")
             logging.info("Created best model file path.")
             save_object(self.model_trainer_config.trained_model_file_path, ml_boston_model)
 

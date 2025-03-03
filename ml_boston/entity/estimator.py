@@ -5,7 +5,7 @@ from sklearn.pipeline import Pipeline
 
 from ml_boston.exception import ExceptionHandle
 from ml_boston.logger import logging
-
+import numpy as np
 
 
 class TargetValueMapping:

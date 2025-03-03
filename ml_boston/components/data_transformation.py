@@ -2,9 +2,8 @@ import sys
 
 import numpy as np
 import pandas as pd
-# from imblearn.combine import SMOTEENN
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler, OneHotEncoder, OrdinalEncoder
+from sklearn.preprocessing import StandardScaler
 from sklearn.compose import ColumnTransformer
 
 from ml_boston.constants import TARGET_COLUMN, SCHEMA_FILE_PATH
@@ -187,28 +186,6 @@ class DataTransformation():
                 )
 
                 input_feature_test_arr = preprocessor.transform(input_feature_test_df)
-
-                # logging.info("Used the preprocessor object to transform the test features")
-
-                # logging.info("Applying SMOTEENN on Training dataset")
-
-                # smt = SMOTEENN(sampling_strategy="minority")
-
-                # input_feature_train_final, target_feature_train_final = smt.fit_resample(
-                #     input_feature_train_arr, target_feature_train_df
-                # )
-
-                # logging.info("Applied SMOTEENN on training dataset")
-
-                # logging.info("Applying SMOTEENN on testing dataset")
-
-                # input_feature_test_final, target_feature_test_final = smt.fit_resample(
-                #     input_feature_test_arr, target_feature_test_df
-                # )
-
-                # logging.info("Applied SMOTEENN on testing dataset")
-
-                # logging.info("Created train array and test array")
 
                 train_arr = np.c_[
                     np.array(input_feature_train_df), np.array(target_feature_train_df)
